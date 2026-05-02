@@ -1,0 +1,82 @@
+|--- marital-status_Married-civ-spouse <= 0.50
+|   |--- capital_net <= 0.81
+|   |   |--- education-num <= 0.95
+|   |   |   |--- capital_net <= -0.43
+|   |   |   |   |--- sex_Male <= 0.50
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- sex_Male >  0.50
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- capital_net >  -0.43
+|   |   |   |   |--- hours-per-week <= 0.00
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- hours-per-week >  0.00
+|   |   |   |   |   |--- class: 0
+|   |   |--- education-num >  0.95
+|   |   |   |--- age <= -0.66
+|   |   |   |   |--- capital_net <= -0.41
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- capital_net >  -0.41
+|   |   |   |   |   |--- class: 0
+|   |   |   |--- age >  -0.66
+|   |   |   |   |--- hours-per-week <= 0.25
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- hours-per-week >  0.25
+|   |   |   |   |   |--- class: 0
+|   |--- capital_net >  0.81
+|   |   |--- age <= -1.32
+|   |   |   |--- class: 0
+|   |   |--- age >  -1.32
+|   |   |   |--- capital_net <= 0.97
+|   |   |   |   |--- capital_net <= 0.85
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- capital_net >  0.85
+|   |   |   |   |   |--- class: 0
+|   |   |   |--- capital_net >  0.97
+|   |   |   |   |--- capital_net <= 3.97
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- capital_net >  3.97
+|   |   |   |   |   |--- class: 1
+|--- marital-status_Married-civ-spouse >  0.50
+|   |--- education-num <= 0.56
+|   |   |--- capital_net <= 0.54
+|   |   |   |--- education-num <= -0.61
+|   |   |   |   |--- capital_net <= -0.37
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- capital_net >  -0.37
+|   |   |   |   |   |--- class: 0
+|   |   |   |--- education-num >  -0.61
+|   |   |   |   |--- capital_net <= -0.38
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- capital_net >  -0.38
+|   |   |   |   |   |--- class: 0
+|   |   |--- capital_net >  0.54
+|   |   |   |--- relationship_Other-relative <= 0.50
+|   |   |   |   |--- age <= 1.61
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- age >  1.61
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- relationship_Other-relative >  0.50
+|   |   |   |   |--- class: 0
+|   |--- education-num >  0.56
+|   |   |--- capital_net <= 0.54
+|   |   |   |--- capital_net <= -0.37
+|   |   |   |   |--- capital_net <= -0.40
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- capital_net >  -0.40
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- capital_net >  -0.37
+|   |   |   |   |--- age <= -0.81
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- age >  -0.81
+|   |   |   |   |   |--- class: 1
+|   |   |--- capital_net >  0.54
+|   |   |   |--- age <= 3.44
+|   |   |   |   |--- hours-per-week <= -1.46
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- hours-per-week >  -1.46
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- age >  3.44
+|   |   |   |   |--- workclass_Self-emp-not-inc <= 0.50
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- workclass_Self-emp-not-inc >  0.50
+|   |   |   |   |   |--- class: 0
