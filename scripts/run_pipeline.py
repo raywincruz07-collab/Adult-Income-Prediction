@@ -43,6 +43,11 @@ plt.rcParams.update({"figure.dpi": 110, "axes.titlesize": 12, "axes.labelsize": 
 os.makedirs("data/processed", exist_ok=True)
 os.makedirs("results", exist_ok=True)
 
+# Initialize classification reports file
+with open("results/classification_reports.txt", "w") as f:
+    f.write("ADULT INCOME PREDICTION - DETAILED CLASSIFICATION REPORTS\n")
+    f.write("========================================================\n")
+
 all_results = []
 plot_counter = [0]
 
@@ -76,8 +81,21 @@ def evaluate_model(model, X_test, y_test, model_name="Model"):
     print(f"  Recall   : {rec:.4f}")
     print(f"  F1-Score : {f1:.4f}  << PRIMARY")
     print(f"  ROC-AUC  : {auc:.4f}")
+    report = classification_report(y_test, y_pred, target_names=["<=50K", ">50K"])
     print(f"\nClassification Report:")
-    print(classification_report(y_test, y_pred, target_names=["<=50K", ">50K"]))
+    print(report)
+
+    # Save detailed report to file
+    with open("results/classification_reports.txt", "a") as f:
+        f.write(f"\n{'='*60}\n")
+        f.write(f"MODEL: {model_name}\n")
+        f.write(f"{'='*60}\n")
+        f.write(f"Accuracy : {acc:.4f}\n")
+        f.write(f"F1-Score : {f1:.4f}\n")
+        f.write(f"ROC-AUC  : {auc:.4f}\n")
+        f.write(f"\nDetailed Classification Report:\n")
+        f.write(report)
+        f.write("\n\n")
 
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
     ConfusionMatrixDisplay.from_predictions(

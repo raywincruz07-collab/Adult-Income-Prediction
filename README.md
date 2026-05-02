@@ -57,7 +57,7 @@ The **XGBoost** model and the **Ensemble** model achieved the highest performanc
 - **XGBoost F1-Score (Weighted)**: 0.8645
 - **Ensemble ROC-AUC**: 0.9200
 
-Detailed results and plots can be found in the `results/` directory.
+Detailed results, plots, and **full classification reports for every model** can be found in the `results/` directory (see `classification_reports.txt`).
 
 ## How to Run
 1. Ensure all dependencies are installed:
