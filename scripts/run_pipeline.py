@@ -33,6 +33,7 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree, export_text
 from sklearn.dummy import DummyClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.model_selection import StratifiedKFold, cross_val_score
 from xgboost import XGBClassifier
 import category_encoders as ce
 
@@ -304,6 +305,19 @@ ensemble_model = VotingClassifier(
 ensemble_model.fit(X_train, y_train)
 evaluate_model(ensemble_model, X_test, y_test, "Soft Voting Ensemble")
 
+# ── Cross-Validation (Item 5 in Work Plan) ──
+print("\n--- 5-Fold Stratified Cross-Validation (XGBoost) ---")
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+cv_scores = cross_val_score(xgb_model, X_train, y_train, cv=skf, scoring="f1_weighted")
+print(f"  CV F1-Scores (Weighted): {cv_scores}")
+print(f"  Mean CV F1-Score: {cv_scores.mean():.4f} (+/- {cv_scores.std()*2:.4f})")
+with open("results/classification_reports.txt", "a") as f:
+    f.write(f"\n{'='*60}\n")
+    f.write(f"5-FOLD STRATIFIED CROSS-VALIDATION (XGBoost)\n")
+    f.write(f"{'='*60}\n")
+    f.write(f"CV F1-Scores: {cv_scores}\n")
+    f.write(f"Mean F1: {cv_scores.mean():.4f}\n\n")
+
 # ── Feature Importance ──
 print("\n--- Feature Importance Analysis ---")
 rf_imp = pd.DataFrame({
@@ -339,7 +353,7 @@ print("  Full rules saved to results/decision_tree_rules.txt")
 
 # ── Fairness Analysis ──
 print("\n--- Fairness Analysis ---")
-fair_cols = [c for c in X_test.columns if c.startswith("sex_") or c.startswith("race_")]
+fair_cols = [c for c in X_test.columns if c.startswith("sex_") or c.startswith("race_") or c == "native-country"]
 print(f"Protected attribute columns: {fair_cols}")
 
 best_model = ensemble_model

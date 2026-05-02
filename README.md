@@ -4,71 +4,77 @@
 This project aims to build a predictive model to determine whether an individual's annual income exceeds $50,000 based on census data. This is a binary classification task using the well-known **UCI Census Income (Adult)** dataset.
 
 **Project Status:** 
-- Work Plans 1, 2, 3: Completed (EDA & Preprocessing)
-- Work Plan 4: Completed (Baseline & Symbolic Models)
-- Work Plan 6: Completed (Advanced Models & Ensemble & Interpretation)
+- Work Plans 1-3: ✅ **COMPLETED** (EDA & Preprocessing)
+- Work Plan 4: ✅ **COMPLETED** (Baseline & Symbolic Models)
+- Work Plan 5: ✅ **COMPLETED** (Cross-Validation)
+- Work Plan 6: ✅ **COMPLETED** (Advanced Models, Ensemble & Fairness)
 
-## Project Structure
-The project is organized into the following directory structure for better maintainability and clarity:
+## 📊 Live Results Dashboard (WP 4 & 6)
 
+| Model | Accuracy | F1-Score (Weighted) | ROC-AUC |
+| :--- | :--- | :--- | :--- |
+| **Majority-Class Baseline** | 76.06% | 0.6572 | 0.5000 |
+| **Logistic Regression** | 84.49% | 0.8394 | 0.8986 |
+| **Decision Tree (depth=5)** | 84.96% | 0.8421 | 0.8863 |
+| **SVM (RBF kernel)** | 85.58% | 0.8494 | 0.8953 |
+| **Random Forest (n=200)** | 84.76% | 0.8439 | 0.8936 |
+| **XGBoost (n=300)** | **86.69%** | **0.8645** | **0.9230** |
+| **Soft Voting Ensemble** | 86.49% | 0.8611 | 0.9200 |
+
+> **Note**: Primary metric is **F1-Score (weighted)** due to class imbalance (76/24). **XGBoost** is the best performing model.
+
+## ⚖️ Fairness Analysis Summary (WP 6)
+Analyzed using the **Soft Voting Ensemble** across protected attributes:
+
+| Protected Attribute | Group | Accuracy | F1-Score |
+| :--- | :--- | :--- | :--- |
+| **Sex** | Male | 83.08% | 0.8278 |
+| **Sex** | Female | 93.24% | 0.9262 |
+| **Race** | White | 85.76% | 0.8538 |
+| **Race** | Black | 92.49% | 0.9186 |
+
+*For full fairness details across all categories (including native-country), see `results/fairness_analysis.csv`.*
+
+## 📁 Project Structure
 ```
 DATA_MINING_PROJECT/
 ├── data/
 │   ├── raw/                # Original dataset (census_income_full.csv)
-│   └── processed/          # Preprocessed train/val/test splits
-├── notebooks/              # Jupyter Notebooks for different stages
+│   └── processed/          # Preprocessed train/val/test CSV splits
+├── notebooks/              # Jupyter Notebooks (Ordered 01-03)
 │   ├── 01_import_dataset.ipynb
 │   ├── 02_EDA_Preprocessing.ipynb
 │   └── 03_Modelling.ipynb
-├── scripts/                # Utility scripts and complete pipeline
-│   └── run_pipeline.py     # End-to-end execution script
+├── scripts/                # Utility scripts
+│   └── run_pipeline.py     # COMPLETE End-to-End Execution Script
 ├── results/                # Visualizations, rules, and model summaries
-├── docs/                   # Project planning and requirements
-├── .gitignore              # Files to be ignored by Git
+├── docs/                   # Project planning (Work Plan PDF)
+├── .gitignore              # Git configuration
 ├── LICENSE.txt             # Project license
-└── README.md               # Project documentation
+└── README.md               # Updated Project Documentation
 ```
 
-## Implementation Summary
+## 🛠️ Implementation Highlights
 
 ### 1. Data Exploration & Preprocessing (WP 1-3)
-- **Data Acquisition**: Dataset fetched from UCI ML Repository.
-- **Exploratory Data Analysis (EDA)**: Comprehensive analysis of demographics, income distributions, and feature correlations.
-- **Data Cleaning**: Mode imputation for missing values and removal of duplicate rows.
-- **Feature Engineering**: 
-  - Created `capital_net` (Capital Gain - Capital Loss).
-  - Categorized Education into tiers.
-  - Dropped redundant features like `fnlwgt` and `education`.
-- **Transformation**: Applied One-Hot Encoding for categorical features and Target Encoding for high-cardinality features (`native-country`). Standardized numeric features.
+- **Cleaning**: Mode imputation for missing values in `workclass`, `occupation`, and `native-country`.
+- **Feature Engineering**: Merged capital gain/loss into `capital_net`. Dropped `fnlwgt` and `education` (redundant).
+- **Pipeline**: Applied `StandardScaler` for numeric and `TargetEncoder` for high-cardinality `native-country`.
 
-### 2. Baseline & Symbolic Models (WP 4)
-- **Baseline**: Established a Majority-Class Baseline (76.1% accuracy).
-- **Logistic Regression**: Analyzed feature coefficients to understand predictors for income levels.
-- **Decision Tree**: Trained a interpretable tree with `max_depth=5` for rule-based prediction.
+### 2. Modeling & Evaluation (WP 4 & 5)
+- **Baseline**: Majority-class dummy classifier as a benchmark.
+- **Symbolic**: Logistic Regression coefficients analyzed and Decision Tree (max_depth=5) visualized.
+- **Stability**: Performed **5-Fold Stratified Cross-Validation** on XGBoost (Mean F1: 0.864).
 
-### 3. Advanced Models & Ensemble (WP 6)
-- **Advanced Classifiers**: Trained and evaluated **SVM (RBF kernel)**, **Random Forest**, and **XGBoost**.
-- **Ensemble Learning**: Built a **Soft Voting Ensemble** (Logistic Regression + Random Forest + XGBoost) for robust predictions.
-- **Interpretation**: Extracted human-readable decision rules and analyzed feature importance (Gini/Gain).
-- **Fairness Analysis**: Evaluated the best-performing model across protected attributes (Race and Sex) to ensure ethical and unbiased predictions.
+### 3. Advanced & Interpretation (WP 6)
+- **Advanced Classifiers**: Comparative analysis of SVM, Random Forest, and Gradient Boosting.
+- **Interpretation**: Extracted human-readable decision rules and analyzed feature importance (XGBoost Gain vs. RF Gini).
+- **Fairness**: Conducted audit across Sex, Race, and Native-Country.
 
-## Key Results
-The **XGBoost** model and the **Ensemble** model achieved the highest performance:
-- **XGBoost F1-Score (Weighted)**: 0.8645
-- **Ensemble ROC-AUC**: 0.9200
-
-Detailed results, plots, and **full classification reports for every model** can be found in the `results/` directory (see `classification_reports.txt`).
-
-## How to Run
-1. Ensure all dependencies are installed:
-   ```bash
-   pip install pandas numpy matplotlib seaborn scikit-learn category_encoders xgboost
-   ```
-2. To run the entire pipeline end-to-end:
-   ```bash
-   python scripts/run_pipeline.py
-   ```
-3. Or explore the Jupyter notebooks in the `notebooks/` folder sequentially.
+## 🚀 How to Run
+1. Install dependencies: `pip install pandas numpy matplotlib seaborn scikit-learn category_encoders xgboost`
+2. Run the end-to-end pipeline: `python scripts/run_pipeline.py`
+3. Results are automatically saved to the `results/` folder.
 
 ---
-**Team 04 - Data Mining Project**
+**Team 04 - Data Mining Project - IE500**
