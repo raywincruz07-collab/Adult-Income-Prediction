@@ -1,0 +1,22 @@
+|--- marital-status_Married-civ-spouse <= 0.50
+|   |--- capital_net <= 0.49
+|   |   |--- education-num <= 0.95
+|   |   |   |--- class: 0
+|   |   |--- education-num >  0.95
+|   |   |   |--- class: 0
+|   |--- capital_net >  0.49
+|   |   |--- capital_net <= 0.81
+|   |   |   |--- class: 1
+|   |   |--- capital_net >  0.81
+|   |   |   |--- class: 1
+|--- marital-status_Married-civ-spouse >  0.50
+|   |--- education-num <= -0.22
+|   |   |--- capital_net <= 0.54
+|   |   |   |--- class: 0
+|   |   |--- capital_net >  0.54
+|   |   |   |--- class: 1
+|   |--- education-num >  -0.22
+|   |   |--- education-num <= 0.95
+|   |   |   |--- class: 1
+|   |   |--- education-num >  0.95
+|   |   |   |--- class: 1

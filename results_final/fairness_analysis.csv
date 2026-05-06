@@ -1,0 +1,11 @@
+Group,Size,Accuracy,F1-Score
+race_Asian-Pac-Islander=0,15744,0.8427,0.8492
+race_Asian-Pac-Islander=1,504,0.8075,0.8187
+race_Black=0,14691,0.8338,0.8405
+race_Black=1,1557,0.9159,0.918
+race_Other=0,16109,0.841,0.8476
+race_Other=1,139,0.9137,0.9018
+race_White=0,2346,0.8896,0.8945
+race_White=1,13902,0.8335,0.8401
+sex_Male=0,5459,0.9289,0.9292
+sex_Male=1,10789,0.7975,0.8043
