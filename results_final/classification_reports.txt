@@ -1,0 +1,161 @@
+ADULT INCOME PREDICTION - HPM TUNING CLASSIFICATION REPORTS
+============================================================
+
+==========================================================================================
+5-FOLD CV COMPARISON SUMMARY
+==========================================================================================
+                         CV Accuracy  CV Precision  CV Recall  CV F1-Score  CV ROC-AUC
+Model                                                                                 
+Logistic Regression           0.8015        0.8500     0.8015       0.8132      0.8987
+Decision Tree (depth=5)       0.7738        0.8483     0.7738       0.7892      0.8894
+Random Forest (n=200)         0.8410        0.8371     0.8410       0.8387      0.8935
+XGBoost (n=300)               0.8368        0.8588     0.8368       0.8433      0.9149
+Soft Voting Ensemble          0.8494        0.8625     0.8494       0.8538      0.9167
+
+
+==========================================================================================
+GRIDSEARCHCV TUNING RESULTS
+==========================================================================================
+LR        -> best params: {'C': 0.1, 'penalty': 'l1', 'solver': 'liblinear'}
+LR        -> best CV F1 : 0.8133
+DT        -> best params: {'criterion': 'gini', 'max_depth': 3, 'min_samples_split': 2}
+DT        -> best CV F1 : 0.8266
+RF        -> best params: {'max_depth': None, 'min_samples_split': 10, 'n_estimators': 300}
+RF        -> best CV F1 : 0.85
+XGBoost   -> best params: {'learning_rate': 0.1, 'max_depth': 10, 'n_estimators': 300}
+XGBoost   -> best CV F1 : 0.8476
+
+
+
+============================================================
+MODEL: Majority-Class Baseline
+============================================================
+Accuracy : 0.7606
+F1-Score : 0.6572
+ROC-AUC  : 0.5000
+
+Detailed Classification Report:
+              precision    recall  f1-score   support
+
+       <=50K       0.76      1.00      0.86     12358
+        >50K       0.00      0.00      0.00      3890
+
+    accuracy                           0.76     16248
+   macro avg       0.38      0.50      0.43     16248
+weighted avg       0.58      0.76      0.66     16248
+
+
+
+============================================================
+MODEL: Logistic Regression (Tuned)
+============================================================
+Accuracy : 0.7975
+F1-Score : 0.8096
+ROC-AUC  : 0.8978
+
+Detailed Classification Report:
+              precision    recall  f1-score   support
+
+       <=50K       0.94      0.78      0.85     12358
+        >50K       0.55      0.85      0.67      3890
+
+    accuracy                           0.80     16248
+   macro avg       0.75      0.81      0.76     16248
+weighted avg       0.85      0.80      0.81     16248
+
+
+
+============================================================
+MODEL: Decision Tree (Tuned)
+============================================================
+Accuracy : 0.8206
+F1-Score : 0.8250
+ROC-AUC  : 0.8700
+
+Detailed Classification Report:
+              precision    recall  f1-score   support
+
+       <=50K       0.90      0.86      0.88     12358
+        >50K       0.61      0.71      0.65      3890
+
+    accuracy                           0.82     16248
+   macro avg       0.76      0.78      0.77     16248
+weighted avg       0.83      0.82      0.83     16248
+
+
+
+============================================================
+MODEL: Random Forest (Tuned)
+============================================================
+Accuracy : 0.8419
+F1-Score : 0.8462
+ROC-AUC  : 0.9108
+
+Detailed Classification Report:
+              precision    recall  f1-score   support
+
+       <=50K       0.92      0.87      0.89     12358
+        >50K       0.64      0.76      0.70      3890
+
+    accuracy                           0.84     16248
+   macro avg       0.78      0.81      0.80     16248
+weighted avg       0.85      0.84      0.85     16248
+
+
+
+============================================================
+MODEL: XGBoost (Tuned)
+============================================================
+Accuracy : 0.8407
+F1-Score : 0.8471
+ROC-AUC  : 0.9238
+
+Detailed Classification Report:
+              precision    recall  f1-score   support
+
+       <=50K       0.94      0.85      0.89     12358
+        >50K       0.63      0.82      0.71      3890
+
+    accuracy                           0.84     16248
+   macro avg       0.78      0.83      0.80     16248
+weighted avg       0.86      0.84      0.85     16248
+
+
+
+============================================================
+MODEL: SVM (RBF kernel)
+============================================================
+Accuracy : 0.8058
+F1-Score : 0.8174
+ROC-AUC  : 0.9004
+
+Detailed Classification Report:
+              precision    recall  f1-score   support
+
+       <=50K       0.95      0.79      0.86     12358
+        >50K       0.56      0.86      0.68      3890
+
+    accuracy                           0.81     16248
+   macro avg       0.75      0.83      0.77     16248
+weighted avg       0.86      0.81      0.82     16248
+
+
+
+============================================================
+MODEL: Tuned Ensemble
+============================================================
+Accuracy : 0.8416
+F1-Score : 0.8482
+ROC-AUC  : 0.9215
+
+Detailed Classification Report:
+              precision    recall  f1-score   support
+
+       <=50K       0.94      0.85      0.89     12358
+        >50K       0.63      0.82      0.71      3890
+
+    accuracy                           0.84     16248
+   macro avg       0.78      0.84      0.80     16248
+weighted avg       0.86      0.84      0.85     16248
+
+
