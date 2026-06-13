@@ -1,56 +1,96 @@
-# Adult Income Prediction Project (UCI Census Income)
+# Adult Income Prediction
+
+> An end-to-end binary-classification study predicting whether annual income exceeds $50,000 using the UCI Adult dataset, with model comparison, hyperparameter tuning, interpretation and fairness analysis.
+
+![Python](https://img.shields.io/badge/Python-3.x-blue.svg) ![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626.svg)
+
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Architecture](#architecture)
+- [Methodology](#methodology)
+- [Verified Results](#verified-results)
+- [Repository Structure](#repository-structure)
+- [Getting Started](#getting-started)
+- [My Contributions](#my-contributions)
+- [Limitations & Future Improvements](#limitations--future-improvements)
+- [License](#license)
+- [Project Origin](#project-origin)
 
 ## Project Overview
-This project aims to build a predictive model to determine whether an individual's annual income exceeds $50,000 based on census data. This is a binary classification task using the well known **UCI Census Income (Adult)** dataset.
 
-## 📊 Live Results Dashboard (Tuned Models)
+**Problem Statement:** Income inequality and bias in predictive models are critical concerns in machine learning. This project analyzes the UCI Adult dataset to predict income brackets while rigorously evaluating models for predictive performance and fairness.
 
-| Model | Accuracy | F1-Score (Weighted) | ROC-AUC |
-| :--- | :--- | :--- | :--- |
-| **Majority-Class Baseline** | 76.06% | 0.6572 | 0.5000 |
-| **Logistic Regression (Tuned)** | 79.75% | 0.8096 | 0.8978 |
-| **Decision Tree (Tuned)** | 82.06% | 0.8250 | 0.8700 |
-| **Random Forest (Tuned)** | 84.19% | 0.8462 | 0.9108 |
-| **XGBoost (Tuned)** | 84.07% | 0.8471 | 0.9238 |
-| **SVM (RBF kernel)** | 80.58% | 0.8174 | 0.9004 |
-| **Tuned Ensemble (Soft Voting)** | 84.16% | 0.8482 | 0.9215 |
+**Solution:** A complete machine-learning pipeline comparing baseline classifiers against tuned algorithms (Logistic Regression, Decision Trees, SVM, Random Forest, XGBoost, and a Soft-voting Ensemble), including cross-validation and fairness auditing.
 
-> **Note**: Primary metric is **F1-Score (weighted)** due to class imbalance (76/24). The models have been systematically optimized using **GridSearchCV**. The **Tuned Ensemble** provides strong balanced performance.
+## Architecture
 
-## ⚖️ Fairness Analysis Summary (Tuned Ensemble)
-Analyzed using the **Tuned Ensemble** across protected attributes:
+```mermaid
+flowchart LR
+    A[UCI Adult data] --> B[Cleaning and feature engineering]
+    B --> C[Encoding and scaling]
+    C --> D[Baseline and candidate models]
+    D --> E[GridSearchCV]
+    E --> F[Performance evaluation]
+    F --> G[Interpretation and fairness audit]
+```
 
-| Protected Attribute | Group | Accuracy | F1-Score |
-| :--- | :--- | :--- | :--- |
-| **Sex** | Male | 79.75% | 0.8043 |
-| **Sex** | Female | 92.89% | 0.9292 |
-| **Race** | White | 83.35% | 0.8401 |
-| **Race** | Black | 91.59% | 0.9180 |
+## Methodology
 
-*For full fairness details across all categories (including native-country), see `results_final/fairness_analysis.csv`.*
+- **Preprocessing:** Handling missing values, engineering features, and target encoding.
+- **Model Comparison:** Evaluated multiple models including SVM, Random Forest, and XGBoost.
+- **Hyperparameter Tuning:** Systematically optimized using GridSearchCV.
+- **Fairness Analysis:** Conducted audits across sensitive attributes (Sex, Race, Native-Country). Group-level performance differences require careful interpretation and do not automatically prove the model is completely unbiased.
 
-## 🛠️ Implementation Highlights
+## Verified Results
 
-### 1. Data Exploration & Preprocessing
-- **Cleaning**: Mode imputation for missing values in `workclass`, `occupation`, and `native-country`.
-- **Feature Engineering**: Merged capital gain/loss into `capital_net`. Dropped `fnlwgt` and `education` (redundant).
-- **Pipeline**: Applied `StandardScaler` for numeric and `TargetEncoder` for high-cardinality `native-country`.
+Extracted from `results_final/model_comparison.csv`.
 
-### 2. Modeling & Evaluation
-- **Baseline**: Majority-class dummy classifier as a benchmark.
-- **Symbolic**: Logistic Regression coefficients analyzed and Decision Tree (max_depth=5) visualized.
-- **Stability**: Performed **5-Fold Stratified Cross-Validation** on models, achieving strong performance metrics (e.g., Mean F1: ~0.855 for the Ensemble).
+| Model | Accuracy | Weighted F1 | ROC-AUC |
+|---|---:|---:|---:|
+| Random Forest | 84.19% | 0.8462 | 0.9108 |
+| XGBoost | 84.07% | 0.8471 | 0.9238 |
+| Soft Voting Ensemble | 84.16% | 0.8482 | 0.9215 |
 
-### 3. Advanced, Interpretation & Tuning
-- **Advanced Classifiers**: Comparative analysis of SVM, Random Forest, and XGBoost.
-- **Hyperparameter Tuning**: Systematically optimized models using `GridSearchCV` with class weighting (`balanced`) to handle class imbalance.
-- **Interpretation**: Extracted human-readable decision rules and analyzed feature importance (XGBoost Gain vs. RF Gini).
-- **Fairness**: Conducted audit across Sex and Race using the Tuned Ensemble model.
+## Repository Structure
 
-## 🚀 How to Run
-1. Install dependencies: `pip install pandas numpy matplotlib seaborn scikit-learn category_encoders xgboost`
-2. Run the end-to-end pipeline: `python scripts/run_pipeline.py`
-3. Results are automatically saved to the `results/` folder (Baseline outputs) and `results_final/` folder (Tuned model outputs).
+- `data/`: Raw and processed datasets.
+- `notebooks/`: Jupyter notebooks for EDA, preprocessing, and modeling.
+- `scripts/`: Python scripts for running the end-to-end pipeline.
+- `results_final/`: Final authoritative visualizations, CSVs, and classification reports.
 
----
-**Team 04 - Data Mining Project - IE500**
+## Getting Started
+
+To reproduce the pipeline:
+
+1. Ensure Python 3.x is installed.
+2. Install the verified dependencies:
+   ```bash
+   python -m pip install pandas numpy matplotlib seaborn scikit-learn category_encoders xgboost
+   ```
+3. Run the end-to-end workflow, which reads from `data/raw/census_income_full.csv` and outputs to `results_final/`:
+   ```bash
+   python scripts/run_pipeline.py
+   ```
+4. Alternatively, open and execute the notebooks in the `notebooks/` directory sequentially.
+
+## My Contributions
+
+My contribution to this project included:
+- Setting up the professional project structure and end-to-end modeling pipeline.
+- Configuring 5-fold cross-validation and generating the native-country fairness analysis.
+- Enhancing result visibility by producing full classification reports.
+
+## Limitations & Future Improvements
+- Further analysis on intersectional fairness metrics.
+- Deployment of the final ensemble model via a REST API.
+
+## License
+
+See the [LICENSE.txt](LICENSE.txt) file for licensing information.
+
+## Project Origin
+
+This repository is maintained as a personal fork of the original project.
+
+- [Original repository](https://github.com/hazarcs/IE500-DataMining-Project)
+- [Raywin Cruz – GitHub](https://github.com/raywincruz07-collab)
